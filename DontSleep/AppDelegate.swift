@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import IOKit.pwr_mgt
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -14,6 +15,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     var statusItem = NSStatusItem()
     var darkModeOn = false
+    var sleepModeOn = false
+    var assertionID : IOPMAssertionID = IOPMAssertionID(0)
+    let kIOPMAssertPreventUserIdleDisplaySleep = "PreventUserIdleDisplaySleep" as CFString
+    var success : IOReturn = 0
+    
+    var reasonForActivity = "DontSleep is on -- so don't sleep!" as CFString
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Create the new status item with a certain alloated space.
@@ -34,7 +41,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func itemClicked(sender: AnyObject) {
         // Change the statusItem image.
-        self.statusItem.image = NSImage(named: "sunny24")
+        if self.sleepModeOn == false {
+            self.statusItem.image = NSImage(named: "sunny24")
+        
+            success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleDisplaySleep,
+                                                    IOPMAssertionLevel(kIOPMAssertionLevelOn),
+                                                    reasonForActivity,
+                                                    &assertionID)
+            self.sleepModeOn = true
+        } else {
+            self.statusItem.image = NSImage(named: "sunny24")
+            
+            if success == kIOReturnSuccess {
+                IOPMAssertionRelease(assertionID);
+            }
+        }
     }
 
 }

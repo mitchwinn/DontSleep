@@ -11,6 +11,7 @@
 		7B5957361AE8A38A0064B1A2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B5957351AE8A38A0064B1A2 /* Images.xcassets */; };
 		7B5957391AE8A38A0064B1A2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B5957371AE8A38A0064B1A2 /* MainMenu.xib */; };
 		7B5957451AE8A38A0064B1A2 /* DontSleepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5957441AE8A38A0064B1A2 /* DontSleepTests.swift */; };
+		7B59574F1AE8B6710064B1A2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B59574E1AE8B6710064B1A2 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		7B59573E1AE8A38A0064B1A2 /* DontSleepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DontSleepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5957431AE8A38A0064B1A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B5957441AE8A38A0064B1A2 /* DontSleepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DontSleepTests.swift; sourceTree = "<group>"; };
+		7B59574E1AE8B6710064B1A2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B59574F1AE8B6710064B1A2 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +58,7 @@
 		7B5957251AE8A38A0064B1A2 = {
 			isa = PBXGroup;
 			children = (
+				7B59574E1AE8B6710064B1A2 /* IOKit.framework */,
 				7B5957301AE8A38A0064B1A2 /* DontSleep */,
 				7B5957411AE8A38A0064B1A2 /* DontSleepTests */,
 				7B59572F1AE8A38A0064B1A2 /* Products */,
