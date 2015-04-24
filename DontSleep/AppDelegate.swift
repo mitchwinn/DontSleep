@@ -10,53 +10,84 @@ import Cocoa
 import IOKit.pwr_mgt
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
 
+class AppDelegate: NSObject, NSApplicationDelegate {
+    // MARK: Variables
+    
+    /// The main window.
     @IBOutlet weak var window: NSWindow!
+    
+    /// Status menu item control.
     var statusItem = NSStatusItem()
+
+    /// Flag specifing if dark mode is currently on or off.
     var darkModeOn = false
-    var sleepModeOn = false
+    
+    /// Flag specifing if dont sleep mode is currently on or off.
+    var dontSleepModeOn = false
+    
+    /// Assertion object handling display sleeping.
     var assertionID : IOPMAssertionID = IOPMAssertionID(0)
+    
+    /// Assertion type.
     let kIOPMAssertPreventUserIdleDisplaySleep = "PreventUserIdleDisplaySleep" as CFString
+
+    /// Specifies whether or not the assertion succeeded.
     var success : IOReturn = 0
     
+    /// Status for the assertion depicting the reason for the activity.
     var reasonForActivity = "DontSleep is on -- so don't sleep!" as CFString
 
+    // MARK: Methods
+    
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Create the new status item with a certain alloated space.
         // Magic number "-1" stands for NSVariableStatusItemLength. A bug in beta 3
-        // caused a linker error due to NSVariableStatusItemLength chaning to CGFloat.
-        self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+        // caused a linker error due to NSVariableStatusItemLength changing to a CGFloat.
+        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
         
-        // Add an image to the statusItem.
-        self.statusItem.image = NSImage(named: "sunny24")
+        // Add the inital image to the statusItem.
+        statusItem.image = NSImage(named: "Sunny")
         
-        // Create a action when the item is clicked.
-        self.statusItem.action = Selector("itemClicked:")
-    }
-
-    func applicationWillTerminate(aNotification: NSNotification) {
-        // Insert code here to tear down your application
+        // Create an action when the item is clicked.
+        statusItem.action = Selector("itemClicked:")
     }
     
-    func itemClicked(sender: AnyObject) {
-        // Change the statusItem image.
-        if self.sleepModeOn == false {
-            self.statusItem.image = NSImage(named: "sunny24")
+    /**
+        Selector method that gets called whenever the status menu item gets
+        clicked.
         
+        :param: sender The calling sender.
+    */
+    func itemClicked(sender: AnyObject) {
+        // If the flag sleepModeOn is false DontSleep!
+        if dontSleepModeOn == false {
+            // Change the statusItem image to include rays to
+            // indicate that dont sleep mode is on.
+            statusItem.image = NSImage(named: "SunnyRays")
+        
+            // Create the assertion that will prevent the application from sleeping.
             success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleDisplaySleep,
-                                                    IOPMAssertionLevel(kIOPMAssertionLevelOn),
-                                                    reasonForActivity,
-                                                    &assertionID)
-            self.sleepModeOn = true
-        } else {
-            self.statusItem.image = NSImage(named: "sunny24")
+                                                  IOPMAssertionLevel(kIOPMAssertionLevelOn),
+                                                  reasonForActivity,
+                                                  &assertionID)
             
+            // Flag that sleep mode is on.
+            dontSleepModeOn = true
+            
+        // Sleep mode is already on so release the display sleep assertion.
+        } else {
+            // Change the status menu item back to the default image.
+            statusItem.image = NSImage(named: "Sunny")
+            
+            // If the assertion previously succeeded, relase it.
             if success == kIOReturnSuccess {
                 IOPMAssertionRelease(assertionID);
             }
+            
+            // Reset the sleep mode flag.
+            dontSleepModeOn = false
         }
     }
-
 }
 
