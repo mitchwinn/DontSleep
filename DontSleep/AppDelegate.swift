@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// Status for the assertion depicting the reason for the activity.
     var reasonForActivity = "DontSleep is on -- so don't sleep!" as CFString
-
+    
     // MARK: Methods
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
@@ -46,11 +46,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // caused a linker error due to NSVariableStatusItemLength changing to a CGFloat.
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
         
-        // Add the inital image to the statusItem.
-        statusItem.image = NSImage(named: "Sunny")
-        
         // Create an action when the item is clicked.
         statusItem.action = Selector("itemClicked:")
+        
+        // If the mac os x theme is currently light, use the light image.
+        statusItem.image = NSImage(named: "Sunny")
+        
+        // Set image as a template in order for dark mode changes to take effect.
+        statusItem.image?.setTemplate(true)
     }
     
     /**
@@ -65,7 +68,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Change the statusItem image to include rays to
             // indicate that dont sleep mode is on.
             statusItem.image = NSImage(named: "SunnyRays")
-        
+            
+            // Set image as a template in order for dark mode changes to take effect.
+            statusItem.image?.setTemplate(true)
+            
             // Create the assertion that will prevent the application from sleeping.
             success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleDisplaySleep,
                                                   IOPMAssertionLevel(kIOPMAssertionLevelOn),
@@ -79,6 +85,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             // Change the status menu item back to the default image.
             statusItem.image = NSImage(named: "Sunny")
+            
+            // Set image as a template in order for dark mode changes to take effect.
+            statusItem.image?.setTemplate(true)
             
             // If the assertion previously succeeded, relase it.
             if success == kIOReturnSuccess {
