@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.image = NSImage(named: "Sunny")
         
         // Set image as a template in order for dark mode changes to take effect.
-        statusItem.image?.setTemplate(true)
+        statusItem.image?.setTemplate(true) 
     }
     
     /**
