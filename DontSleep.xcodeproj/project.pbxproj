@@ -154,6 +154,8 @@
 		7B5957261AE8A38A0064B1A2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Mitch Winn";
 				TargetAttributes = {
@@ -400,6 +402,7 @@
 				7B59574A1AE8A38A0064B1A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7B59574B1AE8A38A0064B1A2 /* Build configuration list for PBXNativeTarget "DontSleepTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +411,7 @@
 				7B59574D1AE8A38A0064B1A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

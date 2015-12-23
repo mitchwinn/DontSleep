@@ -53,14 +53,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.image = NSImage(named: "Sunny")
         
         // Set image as a template in order for dark mode changes to take effect.
-        statusItem.image?.setTemplate(true) 
+        statusItem.image?.template = true
     }
     
     /**
         Selector method that gets called whenever the status menu item gets
         clicked.
         
-        :param: sender The calling sender.
+        - parameter sender: The calling sender.
     */
     func itemClicked(sender: AnyObject) {
         // If the flag sleepModeOn is false DontSleep!
@@ -70,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.image = NSImage(named: "SunnyRays")
             
             // Set image as a template in order for dark mode changes to take effect.
-            statusItem.image?.setTemplate(true)
+            statusItem.image?.template = true
             
             // Create the assertion that will prevent the application from sleeping.
             success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleDisplaySleep,
@@ -87,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.image = NSImage(named: "Sunny")
             
             // Set image as a template in order for dark mode changes to take effect.
-            statusItem.image?.setTemplate(true)
+            statusItem.image?.template = true
             
             // If the assertion previously succeeded, relase it.
             if success == kIOReturnSuccess {
