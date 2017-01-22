@@ -40,20 +40,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Methods
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Create the new status item with a certain alloated space.
         // Magic number "-1" stands for NSVariableStatusItemLength. A bug in beta 3
         // caused a linker error due to NSVariableStatusItemLength changing to a CGFloat.
-        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+        statusItem = NSStatusBar.system().statusItem(withLength: -1)
         
         // Create an action when the item is clicked.
-        statusItem.action = Selector("itemClicked:")
+        statusItem.action = #selector(AppDelegate.itemClicked(_:))
         
         // If the mac os x theme is currently light, use the light image.
         statusItem.image = NSImage(named: "Sunny")
         
         // Set image as a template in order for dark mode changes to take effect.
-        statusItem.image?.template = true
+        statusItem.image?.isTemplate = true
     }
     
     /**
@@ -62,7 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         - parameter sender: The calling sender.
     */
-    func itemClicked(sender: AnyObject) {
+    func itemClicked(_ sender: AnyObject) {
         // If the flag sleepModeOn is false DontSleep!
         if dontSleepModeOn == false {
             // Change the statusItem image to include rays to
@@ -70,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.image = NSImage(named: "SunnyRays")
             
             // Set image as a template in order for dark mode changes to take effect.
-            statusItem.image?.template = true
+            statusItem.image?.isTemplate = true
             
             // Create the assertion that will prevent the application from sleeping.
             success = IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleDisplaySleep,
@@ -87,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.image = NSImage(named: "Sunny")
             
             // Set image as a template in order for dark mode changes to take effect.
-            statusItem.image?.template = true
+            statusItem.image?.isTemplate = true
             
             // If the assertion previously succeeded, relase it.
             if success == kIOReturnSuccess {
